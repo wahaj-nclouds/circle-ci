@@ -17,7 +17,6 @@ publish: docker-repo-login
 	${DOCKER} push ${AWS_ECR_ACCOUNT_URL}/${ECR_REPO}:${SHORT_SHA}
 	${DOCKER} push ${AWS_ECR_ACCOUNT_URL}/${ECR_REPO}:latest
 
-SHELL := /bin/bash	
 deploy-service:
 	aws configure set default.region ${REGION}
 	$(eval REVISION=$(shell aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision') )
