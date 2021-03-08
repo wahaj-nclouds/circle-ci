@@ -14,8 +14,8 @@ jobs:
       - run: 
           name: Build image and push
           command: |
-            make SHELL=/bin/bash docker-build-image
-            make SHELL=/bin/bash publish
+            make docker-build-image
+            make publish
   Deployment:
     docker:
       - image: docker:18.06.1-ce-git
