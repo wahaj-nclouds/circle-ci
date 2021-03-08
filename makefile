@@ -19,6 +19,6 @@ publish: docker-repo-login
 
 deploy-service:
 	aws configure set default.region ${REGION}
-	# $(eval REVISION=$(shell aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision') )
+	$(bash -c REVISION=$(shell aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision') )
 	echo "REVISION is : ${REVISION}"
 	# aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE} --task-definition nginx:${REVISION} --force-new-deployment
