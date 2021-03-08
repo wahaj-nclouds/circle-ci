@@ -3,6 +3,7 @@ COMMIT := $(shell git rev-parse --short HEAD)
 REVISION := "eval $$\( aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision'\)"
 REVISION1 := $(shell aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision')
 SHORT_SHA=$(COMMIT)
+SHELL := /bin/sh
 
 docker-build-image:
 	${DOCKER} build -t ${ECR_REPO}:${SHORT_SHA} . --build-arg BUILD="${CIRCLE_BUILD_NUM}"
