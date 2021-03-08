@@ -30,7 +30,6 @@ jobs:
       - run: 
           name: Deploy Service
           command:  |
-            #! /bin/bash
             make deploy-service            
 workflows: 
   version: 2
