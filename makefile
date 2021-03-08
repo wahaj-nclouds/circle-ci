@@ -3,7 +3,6 @@ COMMIT := $(shell git rev-parse --short HEAD)
 REVISION := "eval $$\( aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision'\)"
 REVISION1 := $(shell aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision')
 SHORT_SHA=$(COMMIT)
-SHELL := /bin/sh
 
 docker-build-image:
 	${DOCKER} build -t ${ECR_REPO}:${SHORT_SHA} . --build-arg BUILD="${CIRCLE_BUILD_NUM}"
@@ -19,6 +18,7 @@ publish: docker-repo-login
 	${DOCKER} push ${AWS_ECR_ACCOUNT_URL}/${ECR_REPO}:latest
 
 deploy-service:
+	SHELL := /bin/bash
 	aws configure set default.region ${REGION}
 	$(eval REVISION=$(shell aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision') )
 	echo "REVISION is : $(REVISION)"
