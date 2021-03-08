@@ -18,8 +18,7 @@ publish: docker-repo-login
 	${DOCKER} push ${AWS_ECR_ACCOUNT_URL}/${ECR_REPO}:latest
 
 deploy-service:
-	SHELL = bash
 	aws configure set default.region ${REGION}
-	$(eval REVISION=$(shell aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision') )
+	$(eval SHELL:=/bin/bash REVISION=$(shell aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision') )
 	echo "REVISION is : $(REVISION)"
 	aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE} --task-definition nginx:${REVISION} --force-new-deployment
