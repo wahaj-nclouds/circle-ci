@@ -19,3 +19,4 @@ publish: docker-repo-login
 
 deploy-service:
 	aws configure set default.region ${REGION}
+	$(eval SHELL:=/bin/bash REVISION=$(shell aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision') )
