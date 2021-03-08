@@ -1,4 +1,5 @@
 DOCKER := docker
+SHELL := /bin/bash
 COMMIT := $(shell git rev-parse --short HEAD)
 REVISION := "eval $$\( aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision'\)"
 REVISION1 := $(shell aws ecs register-task-definition  --cli-input-json file://taskdef.json | jq '.taskDefinition.revision')
