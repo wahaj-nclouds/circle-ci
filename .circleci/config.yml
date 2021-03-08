@@ -39,12 +39,12 @@ workflows:
       - Build-and-Push:
           filters:
             branches:
-              only: main
+              only: master
           context: development
       - Deployment:
           requires:
             - Build-and-Push
           filters:
             branches:
-              only: main 
+              only: master
           context: development
